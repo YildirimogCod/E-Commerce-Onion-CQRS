@@ -1,10 +1,7 @@
-﻿using Bogus;
+﻿
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Persistence.Configurations
 {
@@ -12,36 +9,35 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Detail> builder)
         {
-            Faker faker = new Faker("tr");
-            Detail detail = new()
-            {
-                Id = 1,
-                Title = faker.Lorem.Sentence(1),
-                Description = faker.Lorem.Sentence(5),
-                CategoryId = 1,
-                CreatedDate = DateTime.Now,
-                IsDeleted = false,
-            };
-            Detail detail2 = new()
-            {
-                Id = 2,
-                Title = faker.Lorem.Sentence(2),
-                Description = faker.Lorem.Sentence(5),
-                CategoryId = 3,
-                CreatedDate = DateTime.Now,
-                IsDeleted=false,
-            };
-            Detail detail3 = new()
-            {
-                Id = 3,
-                Title = faker.Lorem.Sentence(1),
-                Description = faker.Lorem.Sentence(5),
-                CategoryId = 4,
-                CreatedDate = DateTime.Now,
-                IsDeleted=true
-            };
-
-            builder.HasData(detail,detail2,detail3);
+            builder.HasData(
+                new Detail
+                {
+                    Id = 1,
+                    Title = "Teknik Özellikler",
+                    Description = "Ürünün teknik özellikleri ve kullanım bilgileri.",
+                    CategoryId = 1,
+                    CreatedDate = new DateTime(2026, 1, 1),
+                    IsDeleted = false
+                },
+                new Detail
+                {
+                    Id = 2,
+                    Title = "Bilgisayar Özellikleri",
+                    Description = "Bilgisayar bileşenleri ve donanım bilgileri.",
+                    CategoryId = 3,
+                    CreatedDate = new DateTime(2026, 1, 1),
+                    IsDeleted = false
+                },
+                new Detail
+                {
+                    Id = 3,
+                    Title = "Kadın Giyim Detayları",
+                    Description = "Kadın giyim ürünleri ve kumaş özellikleri.",
+                    CategoryId = 4,
+                    CreatedDate = new DateTime(2026, 1, 1),
+                    IsDeleted = true
+                }
+            );
         }
     }
 }
