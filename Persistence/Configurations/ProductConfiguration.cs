@@ -1,4 +1,4 @@
-﻿using Bogus;
+﻿
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,30 +9,36 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-           Faker faker = new Faker("tr");
-           Product product1 = new Product()
-           {
-               Id = 1,
-               Title = faker.Commerce.ProductName(),
-               Description = faker.Commerce.ProductDescription(),
-               BrandId = 1,
-               Discount = faker.Random.Decimal(0,10),
-               Price = faker.Finance.Amount(10,100),
-               CreatedDate = DateTime.Now,
-               IsDeleted = false,
-           };
-            Product product2 = new Product()
-            {
-                Id = 2,
-                Title = faker.Commerce.ProductName(),
-                Description = faker.Commerce.ProductDescription(),
-                BrandId = 3,
-                Discount = faker.Random.Decimal(0, 10),
-                Price = faker.Finance.Amount(10, 100),
-                CreatedDate = DateTime.Now,
-                IsDeleted = false,
-            };
-            builder.HasData(product1,product2);
+            builder.Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            builder.Property(p => p.Discount)
+                .HasPrecision(18, 2);
+
+            builder.HasData(
+                new Product
+                {
+                    Id = 1,
+                    Title = "Kablosuz Klavye",
+                    Description = "Günlük kullanım için kablosuz klavye.",
+                    BrandId = 1,
+                    Price = 1499.90m,
+                    Discount = 10.00m,
+                    CreatedDate = new DateTime(2026, 1, 1),
+                    IsDeleted = false
+                },
+                new Product
+                {
+                    Id = 2,
+                    Title = "Bluetooth Kulaklık",
+                    Description = "Kablosuz bağlantılı kulak üstü kulaklık.",
+                    BrandId = 3,
+                    Price = 2499.90m,
+                    Discount = 5.00m,
+                    CreatedDate = new DateTime(2026, 1, 1),
+                    IsDeleted = false
+                }
+            );
         }
     }
 }
